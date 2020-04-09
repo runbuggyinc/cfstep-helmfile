@@ -54,7 +54,7 @@ steps:
     type: push
     candidate: ${{BuildingDockerImageHelm3}}
     tags:
-      - 3.0.3-${{HELMFILE_VERSION}}
+      - 3.0.0-${{HELMFILE_VERSION}}
     registry: dockerhub
     when:
       branch:
@@ -63,7 +63,7 @@ steps:
   PushingHelm303ToDockerRegistry:
     title: Pushing to Docker Registry
     type: push
-    candidate: ${{BuildingDockerImageHelm3}}
+    candidate: ${{BuildingDockerImageHelm303}}
     tags:
       - 3.0.3-${{HELMFILE_VERSION}}
     registry: dockerhub
