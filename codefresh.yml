@@ -44,6 +44,18 @@ steps:
           - HELMFILE_VERSION=${{HELMFILE_VERSION}}
           - HELM_DIFF_VERSION=${{HELM_DIFF_VERSION}}
           - HELM_SECRETS_VERSION=${{HELM_SECRETS_VERSION}}
+      BuildingDockerImageHelm311:
+        title: Building Docker Image
+        type: build
+        image_name: codefreshplugins/cfstep-helmfile
+        working_directory: ./
+        dockerfile: Dockerfile
+        tag: build-3.1.1-${{HELMFILE_VERSION}}
+        build_arguments:
+          - HELM_VERSION=3.1.1
+          - HELMFILE_VERSION=${{HELMFILE_VERSION}}
+          - HELM_DIFF_VERSION=3.1.1
+          - HELM_SECRETS_VERSION=${{HELM_SECRETS_VERSION}}
   Push:
     type: parallel
     steps:
@@ -75,6 +87,17 @@ steps:
         candidate: ${{BuildingDockerImageHelm303}}
         tags:
           - 3.0.3-${{HELMFILE_VERSION}}
+        registry: dockerhub
+        when:
+          branch:
+            only:
+              - master
+      PushingHelm311ToDockerRegistry:
+        title: Pushing to Docker Registry
+        type: push
+        candidate: ${{BuildingDockerImageHelm311}}
+        tags:
+          - 3.1.1-${{HELMFILE_VERSION}}
         registry: dockerhub
         when:
           branch:

@@ -2,7 +2,7 @@ kind: step-type
 version: '1.0'
 metadata:
   name: helmfile
-  version: 0.0.3
+  version: 0.0.5
   isPublic: true
   description: Use helmfile from Codefresh pipeline
   sources:
@@ -57,8 +57,8 @@ spec:
             "HELM_VERSION": {
                 "type": "string",
                 "description": "Version of helm binary",
-                "default": "3.0.0",
-                "enum": [ "2.14.3", "3.0.0", "3.0.3" ]
+                "default": "3.0.3",
+                "enum": [ "2.14.3", "3.0.0", "3.0.3", "3.1.1" ]
             },    
             "HELMFILE_VERSION": {
                 "type": "string",
@@ -206,7 +206,7 @@ spec:
   stepsTemplate: |-
     main:
       name: helmfile
-      image: 'codefreshplugins/cfstep-helmfile:${{HELM_VERSION}}-${{HELMFILE_VERSION}}'
+      image: 'codefreshplugins/cfstep-helmfile:[[.Arguments.HELM_VERSION]]-[[.Arguments.HELMFILE_VERSION]]'
       environment:
       [[ range $key, $val := .Arguments ]]
         - '[[ $key ]]=[[ $val ]]'
